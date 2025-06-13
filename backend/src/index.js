@@ -14,7 +14,7 @@ mongoose.connect(MONGO_URL)
 
 app.use(express.json());
 
-app.use("/api/todos",todoRoutes)
+app.use("/api/todo",todoRoutes)
 
 app.listen(PORT, (req,res)=>{
     console.log(`Server is running on port http://localhost:${PORT}`);
