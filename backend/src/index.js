@@ -12,6 +12,12 @@ mongoose.connect(MONGO_URL)
 .then(()=>console.log("MongoDB connected suceessfully"))
 .catch((err)=>console.log("MMongoDB connected failed",err));
 
+const allowedOrgins=["http://localhost:5173"]
+app.use(cors({
+    origin:allowedOrgins,
+    credentials:true
+
+}))
 app.use(express.json());
 
 app.use("/api/todo",todoRoutes)

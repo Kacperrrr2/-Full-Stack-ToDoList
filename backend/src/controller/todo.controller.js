@@ -22,7 +22,7 @@ export const getAllTodos= async (req,res)=>{
 
     }catch(error){
         console.log("Error creating Todo",error);
-        return res.status(500),json("Internal server error");
+        return res.status(500).json("Internal server error");
     }
 }
 
@@ -45,13 +45,13 @@ export const deleteTodoById= async(req,res)=>{
 export const updateTodoById= async(req,res)=>
 {
     const{id}=req.params
-    const{title}=req.body
+    const{title, isCompleted}=req.body
     try {
-        const todo=await Todo.findByIdAndUpdate(id,{title},{new:true})
+        const todo=await Todo.findByIdAndUpdate(id,{title,isCompleted},{new:true})
         if(!todo){
             return res.status(400).json("Todo not found")
         }
-        res.status(400).json(todo)
+        res.status(200).json(todo)
     } catch (error) {
         console.log("Error updating Todo", error)
         return res.status(500).json("Internal server error")
