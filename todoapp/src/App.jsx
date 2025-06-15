@@ -38,10 +38,10 @@ const handleToogleCompeter = async(task)=>{
   
     try {
       
-      const updateed= await updateTodo(task._id,{
+      const updated= await updateTodo(task._id,{
         isCompleted: !task.isCompleted
       })     
-      setTasks((prev=>prev.map((t)=>(t._id===task._id ? {...t, isCompleted: updateed.isCompleted}:t))))
+      setTasks((prev=>prev.map((t)=>(t._id===task._id ? {...t, isCompleted: updated.isCompleted}:t))))
     
     } catch (error) {
       console.log("Failed to updating todo",error)
@@ -72,6 +72,15 @@ const handleDelte= async (id)=>{
           placeholder='Add a new task'
           value={newTask}
           onChange={(e)=>setNewTask(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleAddTask(); 
+            }
+            if (e.key==="Delete"){
+              setNewTask("")
+            }
+          }}
+          
           className='w-full p-3 border border-gray-300 rounded-1g focus:outline-none focus:ring-2 focus:ring-blue-500'
           />
           <button onClick={handleAddTask} className='bg-blue-500 hover:bg-blue-600 text-white px-6 py-4 rounded-1g font-medium transition-all duration-200 flex items-center gap-2 hover:shadow-1g'>
@@ -84,7 +93,7 @@ const handleDelte= async (id)=>{
           <div className='divide-y divide-gray-200'>
             {tasks.map((task)=>(
               <div key={task._id}
-              className='fkex items-center justify-between p-4 hover:bg-gray-50 trasnsition-colors duration-200'
+              className='flex items-center justify-between p-4 hover:bg-gray-50 trasnsition-colors duration-200'
               >
                 <div>
                 <input type='checkbox'
